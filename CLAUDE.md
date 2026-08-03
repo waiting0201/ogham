@@ -27,6 +27,16 @@ src/
 ## Commands
 - `ng serve` — 開發伺服器 (http://localhost:4200)
 - `ng build` — 產出至 dist/ogham
+- `npm run preview` — 建置後用 wrangler dev 在本機模擬 Cloudflare 環境
+- `npm run deploy` — 建置後部署到 Cloudflare Workers
+
+## Deployment
+部署至 **Cloudflare Workers（Static Assets）**，設定檔為 wrangler.jsonc。
+- 純靜態部署：沒有 `main` script，全部由 Cloudflare Asset Worker 直接服務
+- `assets.directory` = `dist/ogham/browser`（Angular application builder 的輸出）
+- `not_found_handling: "single-page-application"` — 未命中的路徑回傳 index.html，支撐 Angular client-side routing
+- CI：.github/workflows/deploy-cloudflare.yml，push 到 master 自動建置並用 cloudflare/wrangler-action@v4 部署
+- 需要的 GitHub secrets：`CLOUDFLARE_API_TOKEN`、`CLOUDFLARE_ACCOUNT_ID`
 
 ## Conventions
 - 使用 standalone components，不使用 NgModules

@@ -1,0 +1,11 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "ogham",
+  "compatibility_date": "2026-08-01",
+  // 純靜態 SPA：不需要 Worker script（無 "main"），全部由 Asset Worker 直接服務
+  "assets": {
+    "directory": "./dist/ogham/browser",
+    // Angular client-side routing：找不到的路徑一律回傳 index.html
+    "not_found_handling": "single-page-application"
+  }
+}
